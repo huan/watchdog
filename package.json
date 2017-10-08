@@ -1,6 +1,6 @@
 {
   "name": "watchdog",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An Electronic Timer used to detect and recover from malfunctions",
   "main": "index.js",
   "directories": {
