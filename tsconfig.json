@@ -26,4 +26,15 @@
     , "moduleResolution": "node"
     , "sourceMap": true
   }
+  , "include": [
+    "src/**/*.ts"
+  ]
+  , "exclude": [
+      "dist"
+    , "node_modules"
+  ]
+  , "compileOnSave": false
+  , "atom": {
+    "rewriteTsconfig": false
+  }
 }
