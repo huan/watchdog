@@ -1,6 +1,7 @@
+const assert       = require('assert')
 const { Watchdog } = require('watchdog')
 
 const dog = new Watchdog()
-dog.init()
+assert(dog)
 
 console.log('Smoke Testing PASSED!')

@@ -48,5 +48,14 @@
   },
   "dependencies": {
     "brolog": "^1.2.6"
-  }
+  },
+  "files": [
+    "package.json",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "bundles/",
+    "src/",
+    "dist/"
+  ]
 }
