@@ -35,7 +35,7 @@ export class Watchdog<T = any> extends EventEmitter {
   public on(event: never,   listener: never)            : never
 
   public on(event: WatchdogEvent, listener: WatchdogListener): this {
-    log.verbose('Watchdog', '%s: on(%s)', this.name, event)
+    log.verbose('Watchdog', '%s: on(%s, listener) registered.', this.name, event)
     super.on(event, listener)
     return this
   }
