@@ -49,6 +49,7 @@ export class Watchdog<T = any> extends EventEmitter {
 
     this.timer = setTimeout(() => {
       log.verbose('Watchdog', '%s: startTimer() setTimeout() after %d', this.name, this.defaultTimeout)
+      this.timer = undefined  // sleep after reset
       this.emit('reset',  this.lastFood, 0)
     }, timeout)
 
