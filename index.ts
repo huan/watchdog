@@ -1,4 +1,7 @@
-import { Watchrat } from './src/watchdog'
+export {
+  log,
+  Watchdog,
+}                   from './src/watchdog'
 
-export { Watchrat }
-export default Watchrat
+import { Watchdog } from './src/watchdog'
+export default Watchdog
