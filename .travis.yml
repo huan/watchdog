@@ -18,11 +18,6 @@ cache:
   directories:
     - node_modules
 
-notifications:
-  email:
-    on_success: change
-    on_failure: change
-
 before_deploy:
   - npm version
   - grep version package.json
@@ -33,4 +28,9 @@ deploy:
   email: zixia@zixia.net
   api_key: "$NPM_TOKEN"
   skip_cleanup: true
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
 

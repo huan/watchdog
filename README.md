@@ -18,9 +18,9 @@ $ npm install watchdog
 import Watchdog from 'watchdog'
 
 const dog = new Watchdog(60 * 1000)
-dog.feed('food')
+dog.feed('food')  // need the first feed to active the dog
 dog.on('reset', () => console.log('no feed in the past 60 seconds!'))
-dog.sleep()
+dog.sleep()       // clear the timer, no reset anymore
 ```
 
 SEE ALSO
