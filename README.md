@@ -16,7 +16,7 @@ SEE ALSO
 
 THANKS
 ------
-Thanks for Damon Oehlman (https://github.com/DamonOehlman) who own the NPM module name `watchdog` and very kindly and nicely, passed this name over to me as my request.
+Thanks for Damon Oehlman (https://github.com/DamonOehlman) who own the NPM module name `watchdog`. He is so kind and nice that passed this name over to me after my request.
 
 AUTHOR
 ------
