@@ -20,7 +20,7 @@ test('starve to reset', sinonTest(async function(this: any, t: test.Test) {
     timeout : TIMEOUT,
   } as WatchdogFood
 
-  const watchdog = new Watchdog('TestWatchdog', TIMEOUT)
+  const watchdog = new Watchdog(TIMEOUT, 'TestWatchdog')
   watchdog.on('reset', (food, left) => {
     t.equal(left, 0, 'timeLeft should equal to 0 when reset')
     t.deepEqual(food, EXPECTED_FOOD, 'should get food back when reset')
@@ -37,7 +37,7 @@ test('feed in the middle', sinonTest(async function(this: any, t: test.Test) {
   const TIMEOUT   = 1 * 1000
   const FEED_TIME = 0.3 * 1000
 
-  const watchdog = new Watchdog('TestWatchdog', TIMEOUT)
+  const watchdog = new Watchdog(TIMEOUT, 'TestWatchdog')
   watchdog.on('reset', () => {
     t.fail('should not be reset')
   })
@@ -54,7 +54,7 @@ test('sleep()', sinonTest(async function(this: any, t: test.Test) {
   const TIMEOUT   = 1 * 1000
   const FEED_TIME = 0.3 * 1000
 
-  const watchdog = new Watchdog('TestWatchdog', TIMEOUT)
+  const watchdog = new Watchdog(TIMEOUT, 'TestWatchdog')
   watchdog.on('reset', () => {
     t.fail('should not be reset')
   })

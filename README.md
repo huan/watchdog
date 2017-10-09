@@ -19,9 +19,9 @@ $ npm install watchdog
 ```ts
 import Watchdog from 'watchdog'
 
-const dog = new Watchdog('mydog', 60 * 1000)
+const dog = new Watchdog(60 * 1000)
 dog.feed('food')
-dog.on('reset', () => console.log('reseted'))
+dog.on('reset', () => console.log('no feed in the past 60 seconds!'))
 dog.sleep()
 ```
 

@@ -22,8 +22,8 @@ export class Watchdog<T = any> extends EventEmitter {
   private lastFood : WatchdogFood<T>
 
   constructor(
-    public name = 'Bark',
     public defaultTimeout = 60 * 1000,
+    public name = 'Bark',
   ) {
     super()
     log.verbose('Watchdog', '%s: constructor(name=%s, defaultTimeout=%d)', name, name, defaultTimeout)
