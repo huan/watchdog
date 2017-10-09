@@ -2,9 +2,7 @@ WATCHDOG
 --------
 An Timer used to Detect and Recover from Malfunctions.
 
-[![Powered by TypeScript](https://img.shields.io/badge/Powered%20By-TypeScript-blue.svg)](https://www.typescriptlang.org/)
-
-[![Build Status](https://travis-ci.org/zixia/watchdog.svg?branch=master)](https://travis-ci.org/zixia/watchdog) [![NPM Version](https://badge.fury.io/js/watchdog.svg)](https://badge.fury.io/js/watchdog) [![Downloads](http://img.shields.io/npm/dm/watchdog.svg?style=flat-square)](https://npmjs.org/package/watchdog)
+[![Build Status](https://travis-ci.org/zixia/watchdog.svg?branch=master)](https://travis-ci.org/zixia/watchdog) [![NPM Version](https://badge.fury.io/js/watchdog.svg)](https://badge.fury.io/js/watchdog) [![Downloads](http://img.shields.io/npm/dm/watchdog.svg?style=flat-square)](https://npmjs.org/package/watchdog) [![Powered by TypeScript](https://img.shields.io/badge/Powered%20By-TypeScript-blue.svg)](https://www.typescriptlang.org/)
 
 ![watchdog](https://zixia.github.io/watchdog/images/watchdog.png)
 > picture credit: [using watchdog timer](https://www.logicsupply.com/explore/io-hub/tutorial-using-beaglebone-black-watchdog-timer/)
@@ -27,7 +25,7 @@ dog.sleep()
 
 SEE ALSO
 --------
-* [WikiPedia: Watchdog timer](https://en.wikipedia.org/wiki/Watchdog_timer)
+* [Wikipedia: Watchdog timer](https://en.wikipedia.org/wiki/Watchdog_timer)
 * [Yet Another watchdog timer for node.js (and browserify)](https://github.com/andrew-filonenko/ya-watchdog)
 
 THANKS
