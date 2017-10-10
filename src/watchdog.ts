@@ -6,20 +6,20 @@ import { EventEmitter } from 'events'
 import Brolog  from 'brolog'
 export const log = new Brolog()
 
-export type WatchdogEvent    = 'feed' | 'reset' | 'sleep'
-export type WatchdogListener = (food: WatchdogFood, left: number) => void
+export type WatchdogEvent       = 'feed' | 'reset' | 'sleep'
+export type WatchdogListener<T, D> = (food: WatchdogFood<T, D>, left: number) => void
 
-export interface WatchdogFood<T = any> {
-  data     : any,
+export interface WatchdogFood<T = any, D = any> {
+  data     : D,
   timeout? : number,   // millisecond
   type?    : T
 }
 
-export class Watchdog<T = any> extends EventEmitter {
+export class Watchdog<T = any, D = any> extends EventEmitter {
   private timer : NodeJS.Timer | undefined | null  // `undefined` stands for the first time init. `null` will be set by `stopTimer`
 
   private lastFeed : number
-  private lastFood : WatchdogFood<T>
+  private lastFood : WatchdogFood<T, D>
 
   constructor(
     public defaultTimeout = 60 * 1000,
@@ -29,12 +29,12 @@ export class Watchdog<T = any> extends EventEmitter {
     log.verbose('Watchdog', '%s: constructor(name=%s, defaultTimeout=%d)', name, name, defaultTimeout)
   }
 
-  public on(event: 'feed',  listener: WatchdogListener) : this
-  public on(event: 'reset', listener: WatchdogListener) : this
-  public on(event: 'sleep', listener: WatchdogListener) : this
+  public on(event: 'feed',  listener: WatchdogListener<T, D>) : this
+  public on(event: 'reset', listener: WatchdogListener<T, D>) : this
+  public on(event: 'sleep', listener: WatchdogListener<T, D>) : this
   public on(event: never,   listener: never)            : never
 
-  public on(event: WatchdogEvent, listener: WatchdogListener): this {
+  public on(event: WatchdogEvent, listener: WatchdogListener<T, D>): this {
     log.verbose('Watchdog', '%s: on(%s, listener) registered.', this.name, event)
     super.on(event, listener)
     return this
@@ -89,7 +89,7 @@ export class Watchdog<T = any> extends EventEmitter {
     return left
   }
 
-  public feed(food: WatchdogFood<T>): number {
+  public feed(food: WatchdogFood<T, D>): number {
     log.verbose('Watchdog', '%s: feed(%s)', this.name, food)
 
     if (!food.timeout) {
