@@ -1,6 +1,6 @@
 WATCHDOG
 --------
-An Timer used to Detect and Recover from Malfunctions.
+A Timer used to Detect and Recover from Malfunctions.
 
 [![Build Status](https://travis-ci.org/zixia/watchdog.svg?branch=master)](https://travis-ci.org/zixia/watchdog) [![NPM Version](https://badge.fury.io/js/watchdog.svg)](https://badge.fury.io/js/watchdog) [![Downloads](http://img.shields.io/npm/dm/watchdog.svg?style=flat-square)](https://npmjs.org/package/watchdog) [![Powered by TypeScript](https://img.shields.io/badge/Powered%20By-TypeScript-blue.svg)](https://www.typescriptlang.org/)
 
@@ -30,7 +30,7 @@ SEE ALSO
 
 THANKS
 ------
-Thanks for Damon Oehlman (https://github.com/DamonOehlman) who owned the `watchdog` name of NPM module. He is so kind and nice that passed this name over to me after my request.
+Thanks to Damon Oehlman (https://github.com/DamonOehlman) who owned the `watchdog` name of NPM module. He is so kind and nice that passed this name over to me after my request.
 
 AUTHOR
 ------
