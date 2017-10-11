@@ -6,13 +6,17 @@ async function main() {
 
   const food = { data: 'delicious' }
 
-  dog.on('reset', () => console.log('got no food before reset fired'))
-  dog.on('feed',  () => console.log('feeded'))
+  dog.on('reset', () => console.log('reset-ed'))
+  dog.on('feed',  () => console.log('feed-ed'))
 
   dog.feed(food)
+  // Output: reset-ed
+
   await new Promise(resolve => setTimeout(resolve, TIMEOUT + 1))
+  // Output: reset-ed
 
   dog.sleep()
+  console.log('dog sleep-ed. Demo over.')
 }
 
 main()
