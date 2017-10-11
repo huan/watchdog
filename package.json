@@ -12,6 +12,8 @@
     "clean": "shx rm -fr dist/* bundles/*",
     "dist": "npm run clean && npm run build && npm run rollup && npm run dist:es6to5",
     "dist:es6to5": "tsc --out ./bundles/watchdog.umd.js --target es5 --allowJs bundles/watchdog.es6.umd.js --lib es6,dom",
+    "demo": "ts-node examples/demo",
+    "example": "npm run dmeo",
     "lint": "echo tslint v`tslint --version` && tslint --project tsconfig.json --type-check \"{bin,examples,src,tests}/**/*.ts\" --exclude \"tests/fixtures/**\" --exclude \"dist/\" && npm run clean && tsc --noEmit",
     "rollup": "rollup -c",
     "test": "npm run lint && npm run test:unit",
