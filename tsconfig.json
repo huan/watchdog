@@ -27,6 +27,7 @@
     , "sourceMap": true
   }
   , "include": [
+    "examples/**/*.ts",
     "src/**/*.ts"
   ]
   , "exclude": [
