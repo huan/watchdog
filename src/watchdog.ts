@@ -90,7 +90,7 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
   }
 
   public feed(food: WatchdogFood<T, D>): number {
-    log.verbose('Watchdog', '%s: feed(%s)', this.name, food)
+    log.verbose('Watchdog', '%s: feed(%s)', this.name, JSON.stringify(food))
 
     if (!food.timeout) {
       food.timeout = this.defaultTimeout
