@@ -36,9 +36,10 @@ setTimeout(function() {
 // Output: dog sleep-ed. Demo over.
 ```
 
-USAGE
------
-see [docs](https://github.com/zixia/watchdog/tree/master/docs/index.md)
+DOCUMENT
+--------
+
+See [auto generated docs](https://zixia.github.io/watchdog)
 
 SEE ALSO
 --------
