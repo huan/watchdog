@@ -1,4 +1,4 @@
-# Watchdog v0.1.5 Documentation
+# Watchdog v0.1.13 Documentation
 
 ## Classes
 
@@ -16,6 +16,9 @@
 <dt><a href="#WatchdogListener">WatchdogListener</a></dt>
 <dd><p>Watchdog Class Event Function</p>
 </dd>
+<dt><a href="#WatchdogFood">WatchdogFood</a></dt>
+<dd><p>Dog Feed content</p>
+</dd>
 </dl>
 
 <a name="Watchdog"></a>
@@ -24,7 +27,7 @@
 **Kind**: global class  
 
 * [Watchdog](#Watchdog)
-    * [new Watchdog()](#new_Watchdog_new)
+    * [new Watchdog([defaultTimeout], [name])](#new_Watchdog_new)
     * [.on(event, listener)](#Watchdog+on) ⇒ <code>this</code>
     * [.left()](#Watchdog+left) ⇒ <code>number</code>
     * [.feed(food)](#Watchdog+feed) ⇒ <code>number</code>
@@ -32,8 +35,14 @@
 
 <a name="new_Watchdog_new"></a>
 
-### new Watchdog()
+### new Watchdog([defaultTimeout], [name])
 A Timer used to detect and recover from malfunctions
+
+
+| Param | Type | Default |
+| --- | --- | --- |
+| [defaultTimeout] | <code>number</code> | <code>60 * 1000</code> | 
+| [name] | <code>string</code> | <code>&quot;&#x27;Bark&#x27;&quot;</code> | 
 
 **Example**  
 ```js
@@ -92,7 +101,7 @@ feed the dog
 
 | Param | Type |
 | --- | --- |
-| food | <code>WatchdogFood.&lt;T, D&gt;</code> | 
+| food | [<code>WatchdogFood</code>](#WatchdogFood) | 
 
 **Example**  
 ```js
@@ -139,4 +148,18 @@ Watchdog Class Event Function
 | Type | Description |
 | --- | --- |
 | <code>function</code> | (food: WatchdogFood<T, D>, left: number) => void |
+
+<a name="WatchdogFood"></a>
+
+## WatchdogFood
+Dog Feed content
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| data | <code>D</code> | feed content. |
+| timeout | <code>number</code> | option, set timeout. |
+| type | <code>T</code> | option. |
 
