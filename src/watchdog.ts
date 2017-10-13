@@ -9,8 +9,12 @@ export type WatchdogEvent       = 'feed' | 'reset' | 'sleep'
 export type WatchdogListener<T, D> = (food: WatchdogFood<T, D>, left: number) => void
 
 /**
+ * Dog Feed content
  *
- * @interface WatchdogFood
+ * @typedef    WatchdogFood
+ * @property   {D}      data     - feed content.
+ * @property   {number} timeout  - option, set timeout.
+ * @property   {T}      type     - option.
  */
 export interface WatchdogFood<T = any, D = any> {
   data     : D,
@@ -48,6 +52,11 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
   private lastFeed : number
   private lastFood : WatchdogFood<T, D>
 
+  /**
+   * Creates an instance of Watchdog.
+   * @param {number} [defaultTimeout=60 * 1000]
+   * @param {string} [name='Bark']
+   */
   constructor(
     public defaultTimeout = 60 * 1000,
     public name = 'Bark',
