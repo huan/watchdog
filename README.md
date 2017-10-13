@@ -17,11 +17,28 @@ $ npm install watchdog
 ```ts
 import Watchdog from 'watchdog'
 
-const dog = new Watchdog(60 * 1000)
-dog.feed('food')  // need the first feed to active the dog
-dog.on('reset', () => console.log('no feed in the past 60 seconds!'))
-dog.sleep()       // clear the timer, no reset anymore
+const TIMEOUT = 1 * 1000  // 1 second
+const dog = new watchdog(TIMEOUT)
+
+const food = { data: 'delicious' }
+
+dog.on('reset', () => console.log('reset-ed'))
+dog.on('feed',  () => console.log('feed-ed'))
+
+dog.feed(food)
+// Output: feed-ed
+
+setTimeout(function() {
+  dog.sleep()
+  console.log('dog sleep-ed. Demo over.')
+}, TIMEOUT + 1)
+// Output: reset-ed.
+// Output: dog sleep-ed. Demo over.
 ```
+
+USAGE
+-----
+see [docs](https://github.com/zixia/watchdog/tree/master/docs/index.md)
 
 SEE ALSO
 --------
