@@ -71,7 +71,7 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
 
   /**
    * @desc       Watchdog Class Event Function
-   * @typedef    WatchdogListener<T, D>
+   * @typedef    WatchdogListener
    * @property   { Function }   - (food: WatchdogFood<T, D>, left: number) => void
    */
 

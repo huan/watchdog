@@ -1,3 +1,5 @@
+# Watchdog v0.1.5 Documentation
+
 ## Classes
 
 <dl>
@@ -11,7 +13,7 @@
 <dt><a href="#WatchdogEvent">WatchdogEvent</a></dt>
 <dd><p>Watchdog Class Event Type</p>
 </dd>
-<dt><a href="#WatchdogListener<T,">WatchdogListener<T,</a></dt>
+<dt><a href="#WatchdogListener">WatchdogListener</a></dt>
 <dd><p>Watchdog Class Event Function</p>
 </dd>
 </dl>
@@ -126,9 +128,9 @@ Watchdog Class Event Type
 | reset | <code>string</code> | Emit when timeout and reset. |
 | sleep | <code>string</code> | Emit when timer is cleared out. |
 
-<a name="WatchdogListener<T,"></a>
+<a name="WatchdogListener"></a>
 
-## WatchdogListener<T,
+## WatchdogListener
 Watchdog Class Event Function
 
 **Kind**: global typedef  
