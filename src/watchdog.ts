@@ -113,6 +113,7 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
     log.verbose('Watchdog', '%s: sleep()', this.name)
     this.stopTimer(true)
     this.timer = undefined
+    this.emit('sleep', this.lastFood, this.left())
   }
 
 }
