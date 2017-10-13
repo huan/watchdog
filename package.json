@@ -50,7 +50,8 @@
     "typescript": "^2.5.3"
   },
   "dependencies": {
-    "brolog": "^1.2.6"
+    "brolog": "^1.2.6",
+    "jsdoc-to-markdown": "^3.0.0"
   },
   "files": [
     "package.json",
