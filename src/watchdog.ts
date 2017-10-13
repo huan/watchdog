@@ -5,16 +5,43 @@ import { EventEmitter } from 'events'
 
 import Brolog  from 'brolog'
 export const log = new Brolog()
-
 export type WatchdogEvent       = 'feed' | 'reset' | 'sleep'
 export type WatchdogListener<T, D> = (food: WatchdogFood<T, D>, left: number) => void
 
+/**
+ *
+ * @interface WatchdogFood
+ */
 export interface WatchdogFood<T = any, D = any> {
   data     : D,
   timeout? : number,   // millisecond
   type?    : T
 }
 
+/**
+ * A Timer used to detect and recover from malfunctions
+ *
+ * @class Watchdog
+ * @example
+ * const TIMEOUT = 1 * 1000  // 1 second
+ * const dog = new watchdog(TIMEOUT)
+ *
+ * const food = { data: 'delicious' }
+ *
+ * dog.on('reset', () => console.log('reset-ed'))
+ * dog.on('feed',  () => console.log('feed-ed'))
+ *
+ * dog.feed(food)
+ * // Output: feed-ed
+ *
+ * setTimeout(function() {
+ *   dog.sleep()
+ *   console.log('dog sleep-ed. Demo over.')
+ * }, TIMEOUT + 1)
+ * // Output: reset-ed.
+ * // Output: dog sleep-ed. Demo over.
+ *
+ */
 export class Watchdog<T = any, D = any> extends EventEmitter {
   private timer : NodeJS.Timer | undefined | null  // `undefined` stands for the first time init. `null` will be set by `stopTimer`
 
@@ -34,6 +61,34 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
   public on(event: 'sleep', listener: WatchdogListener<T, D>) : this
   public on(event: never,   listener: never)            : never
 
+  /**
+   * @desc       Watchdog Class Event Type
+   * @typedef    WatchdogEvent
+   * @property   { string }  feed  - Emit when feed the dog.
+   * @property   { string }  reset - Emit when timeout and reset.
+   * @property   { string }  sleep - Emit when timer is cleared out.
+   */
+
+  /**
+   * @desc       Watchdog Class Event Function
+   * @typedef    WatchdogListener<T, D>
+   * @property   { Function }   - (food: WatchdogFood<T, D>, left: number) => void
+   */
+
+  /**
+   * @listens Watchdog
+   * @param   { WatchdogEvent }           event
+   * @param   { WatchdogListener<T, D> }  listener
+   * @returns { this }
+   *
+   * @example <caption>Event:reset </caption>
+   * dog.on('reset', () => console.log('reset-ed'))
+   * @example <caption>Event:feed </caption>
+   * dog.on('feed',  () => console.log('feed-ed'))
+   * @example <caption>Event:sleep </caption>
+   * dog.on('sleep',  () => console.log('sleep-ed'))
+   *
+   */
   public on(event: WatchdogEvent, listener: WatchdogListener<T, D>): this {
     log.verbose('Watchdog', '%s: on(%s, listener) registered.', this.name, event)
     super.on(event, listener)
@@ -74,6 +129,10 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
     }
   }
 
+  /**
+   * Get the left time
+   * @returns {number}
+   */
   public left(): number {
     let left
     if (Number.isInteger(this.lastFeed)) {
@@ -89,8 +148,20 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
     return left
   }
 
+  /**
+   * feed the dog
+   * @param {WatchdogFood<T, D>} food
+   * @returns {number}
+   * @example
+   * const food = {
+   *   data:    'delicious',
+   *   timeout: 1 * 1000,
+   * }
+   * const dog = new Watchdog()
+   * dog.feed(food)
+   */
   public feed(food: WatchdogFood<T, D>): number {
-    log.verbose('Watchdog', '%s: feed(%s)', this.name, food)
+    log.verbose('Watchdog', '%s: feed(%s)', this.name, JSON.stringify(food))
 
     if (!food.timeout) {
       food.timeout = this.defaultTimeout
@@ -109,6 +180,12 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
     return left
   }
 
+  /**
+   * Clear timer.
+   * @example
+   * const dog = new Watchdog()
+   * dog.sleep()
+   */
   public sleep(): void {
     log.verbose('Watchdog', '%s: sleep()', this.name)
     this.stopTimer(true)
