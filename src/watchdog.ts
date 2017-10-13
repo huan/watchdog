@@ -8,44 +8,12 @@ export const log = new Brolog()
 export type WatchdogEvent       = 'feed' | 'reset' | 'sleep'
 export type WatchdogListener<T, D> = (food: WatchdogFood<T, D>, left: number) => void
 
-/**
- * Dog Feed content
- *
- * @typedef    WatchdogFood
- * @property   {D}      data     - feed content.
- * @property   {number} timeout  - option, set timeout.
- * @property   {T}      type     - option.
- */
 export interface WatchdogFood<T = any, D = any> {
   data     : D,
   timeout? : number,   // millisecond
   type?    : T
 }
 
-/**
- * A Timer used to detect and recover from malfunctions
- *
- * @class Watchdog
- * @example
- * const TIMEOUT = 1 * 1000  // 1 second
- * const dog = new watchdog(TIMEOUT)
- *
- * const food = { data: 'delicious' }
- *
- * dog.on('reset', () => console.log('reset-ed'))
- * dog.on('feed',  () => console.log('feed-ed'))
- *
- * dog.feed(food)
- * // Output: feed-ed
- *
- * setTimeout(function() {
- *   dog.sleep()
- *   console.log('dog sleep-ed. Demo over.')
- * }, TIMEOUT + 1)
- * // Output: reset-ed.
- * // Output: dog sleep-ed. Demo over.
- *
- */
 export class Watchdog<T = any, D = any> extends EventEmitter {
   private timer : NodeJS.Timer | undefined | null  // `undefined` stands for the first time init. `null` will be set by `stopTimer`
 
@@ -53,9 +21,30 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
   private lastFood : WatchdogFood<T, D>
 
   /**
-   * Creates an instance of Watchdog.
+   * A Timer used to detect and recover from malfunctions
+   *
+   * @class Watchdog
    * @param {number} [defaultTimeout=60 * 1000]
    * @param {string} [name='Bark']
+   * @example
+   * const TIMEOUT = 1 * 1000  // 1 second
+   * const dog = new watchdog(TIMEOUT)
+   *
+   * const food = { data: 'delicious' }
+   *
+   * dog.on('reset', () => console.log('reset-ed'))
+   * dog.on('feed',  () => console.log('feed-ed'))
+   *
+   * dog.feed(food)
+   * // Output: feed-ed
+   *
+   * setTimeout(function() {
+   *   dog.sleep()
+   *   console.log('dog sleep-ed. Demo over.')
+   * }, TIMEOUT + 1)
+   * // Output: reset-ed.
+   * // Output: dog sleep-ed. Demo over.
+   *
    */
   constructor(
     public defaultTimeout = 60 * 1000,
@@ -158,8 +147,17 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
   }
 
   /**
+   * Dog Feed content
+   *
+   * @typedef    WatchdogFood
+   * @property   {D}      data     - feed content.
+   * @property   {number} timeout  - option, set timeout.
+   * @property   {T}      type     - option.
+   */
+
+  /**
    * feed the dog
-   * @param {WatchdogFood<T, D>} food
+   * @param {WatchdogFood} food
    * @returns {number}
    * @example
    * const food = {
