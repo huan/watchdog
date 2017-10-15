@@ -47,11 +47,11 @@
     "source-map-support": "^0.5.0",
     "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
+    "jsdoc-to-markdown": "^3.0.0",
     "typescript": "^2.5.3"
   },
   "dependencies": {
-    "brolog": "^1.2.6",
-    "jsdoc-to-markdown": "^3.0.0"
+    "brolog": "^1.2.6"
   },
   "files": [
     "package.json",
