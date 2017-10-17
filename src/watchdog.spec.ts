@@ -70,3 +70,24 @@ test('sleep()', sinonTest(async function(this: any, t: test.Test) {
 
   t.end()
 }))
+
+test('event:feed', async t => {
+  const watchdog = new Watchdog()
+  const spy = sinon.spy()
+
+  watchdog.on('feed', spy)
+  watchdog.feed({ data: 'dummy' })
+  watchdog.sleep()
+
+  t.ok(spy.calledOnce, 'should fire event:feed')
+})
+
+test('event:sleep', async t => {
+  const watchdog = new Watchdog()
+  const spy = sinon.spy()
+
+  watchdog.on('sleep', spy)
+  watchdog.sleep()
+
+  t.ok(spy.calledOnce, 'should fire event:sleep')
+})
