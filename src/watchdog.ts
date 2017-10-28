@@ -6,7 +6,7 @@ import { EventEmitter } from 'events'
 import Brolog  from 'brolog'
 export const log = new Brolog()
 export type WatchdogEvent       = 'feed' | 'reset' | 'sleep'
-export type WatchdogListener<T, D> = (food: WatchdogFood<T, D>, left: number) => void
+export type WatchdogListener<T, D> = (food: WatchdogFood<T, D>, time: number) => void
 
 export interface WatchdogFood<T = any, D = any> {
   data     : D,
@@ -103,7 +103,11 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
     this.timer = setTimeout(() => {
       log.verbose('Watchdog', '%s: startTimer() setTimeout() after %d', this.name, timeout)
       this.timer = undefined  // sleep after reset
-      this.emit('reset',  this.lastFood, 0)
+      this.emit(
+        'reset',
+        this.lastFood,
+        this.lastFood.timeout || this.defaultTimeout,
+      )
     }, timeout)
 
     this.timer.unref()  // should not block node quit
