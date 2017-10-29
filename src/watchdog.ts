@@ -5,6 +5,10 @@ import { EventEmitter } from 'events'
 
 import Brolog  from 'brolog'
 export const log = new Brolog()
+
+import { version }  from '../package.json'
+export const VERSION = version
+
 export type WatchdogEvent       = 'feed' | 'reset' | 'sleep'
 export type WatchdogListener<T, D> = (food: WatchdogFood<T, D>, time: number) => void
 
@@ -52,6 +56,10 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
   ) {
     super()
     log.verbose('Watchdog', '%s: constructor(name=%s, defaultTimeout=%d)', name, name, defaultTimeout)
+  }
+
+  public version(): string {
+    return VERSION
   }
 
   public on(event: 'feed',  listener: WatchdogListener<T, D>) : this

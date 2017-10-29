@@ -92,3 +92,9 @@ test('event:sleep', async t => {
 
   t.ok(spy.calledOnce, 'should fire event:sleep')
 })
+
+test('version()', t => {
+  const dog = new Watchdog()
+  t.ok(dog.version(), 'should get version')
+  t.end()
+})
