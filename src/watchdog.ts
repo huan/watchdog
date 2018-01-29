@@ -55,7 +55,7 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
     public name = 'Bark',
   ) {
     super()
-    log.verbose('Watchdog', '%s: constructor(name=%s, defaultTimeout=%d)', name, name, defaultTimeout)
+    log.verbose('Watchdog', '<%s>: constructor(name=%s, defaultTimeout=%d)', name, name, defaultTimeout)
   }
 
   public version(): string {
