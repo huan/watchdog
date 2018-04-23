@@ -7,27 +7,44 @@ node_js:
   - '7'
   - '8'
 
-script:
-  - echo $TRAVIS_OS_NAME
-  - node --version
-  - npm --version
-  - npm test
-  - npm run test:npm && echo 'Npm packing test passed'
-
 cache:
   directories:
     - node_modules
 
-before_deploy:
-  - npm version
-  - grep version package.json
-  - npm run dist
+stages:
+  - test
+  - pack
+  - name: deploy
+    if: branch =~ ^(master|v\d+\.\d+)$
+        AND (type NOT IN (cron, pull_request))
 
-deploy:
-  provider: npm
-  email: zixia@zixia.net
-  api_key: "$NPM_TOKEN"
-  skip_cleanup: true
+jobs:
+  include:
+    - stage: test
+      script:
+        - echo $TRAVIS_OS_NAME
+        - node --version
+        - npm --version
+        - npm test
+
+      after_success:
+        - if [ "$TRAVIS_OS_NAME" == 'linux' ]; then npm run coverage; fi
+
+    - stage: pack
+      script:
+        - npm run test:pack && echo 'Npm pack testing is passed'
+
+    - stage: deploy
+      before_deploy:
+        - echo "Deploying to NPM ..."
+        - npm version
+        - if [ "$TRAVIS_BRANCH" = "master" -a ./scripts/development-release.ts ]; then ./scripts/package-public-config-tag-next.ts; fi
+        - npm run dist
+      deploy:
+        provider: npm
+        email: zixia@zixia.net
+        api_key: "$NPM_TOKEN"
+        skip_cleanup: true
 
 notifications:
   email:
