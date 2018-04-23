@@ -3,8 +3,7 @@
 
 import { EventEmitter } from 'events'
 
-import Brolog  from 'brolog'
-export const log = new Brolog()
+import { log }  from 'brolog'
 
 import { version }  from '../package.json'
 export const VERSION = version
@@ -180,7 +179,26 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
    * dog.feed(food)
    */
   public feed(food: WatchdogFood<T, D>): number {
-    log.verbose('Watchdog', '%s: feed(%s)', this.name, JSON.stringify(food))
+
+    // JSON.stringify, avoid TypeError: Converting circular structure to JSON
+    // https://stackoverflow.com/a/11616993/1123955
+    function replacerFactory() {
+      // Note: cache should not be re-used by repeated calls to JSON.stringify.
+      const cache: any[] = []
+      return function(_: any, value: any) {
+        if (typeof value === 'object' && value !== null) {
+          if (cache.indexOf(value) !== -1) {
+              // Circular reference found, discard key
+              return
+          }
+          // Store value in our collection
+          cache.push(value)
+        }
+        return value;
+      }
+    }
+
+    log.verbose('Watchdog', '%s: feed(%s)', this.name, JSON.stringify(food, replacerFactory()))
 
     if (!food.timeout) {
       food.timeout = this.defaultTimeout
