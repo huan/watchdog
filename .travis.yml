@@ -47,7 +47,6 @@ jobs:
         skip_cleanup: true
         on:
           all_branches: true
-          condition: $TRAVIS_BRANCH =~ ^(master|v\d+\.\d+)$
 
 notifications:
   email:
