@@ -96,20 +96,20 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
    *
    */
   public on(event: WatchdogEvent, listener: WatchdogListener<T, D>): this {
-    log.verbose('Watchdog', '%s: on(%s, listener) registered.', this.name, event)
+    log.verbose('Watchdog', '<%s> on(%s, listener) registered.', this.name, event)
     super.on(event, listener)
     return this
   }
 
   private startTimer(timeout: number): void {
-    log.verbose('Watchdog', '%s: startTimer()', this.name)
+    log.verbose('Watchdog', '<%s> startTimer()', this.name)
 
     if (this.timer) {
       throw new Error('timer already exist!')
     }
 
     this.timer = setTimeout(() => {
-      log.verbose('Watchdog', '%s: startTimer() setTimeout() after %d', this.name, timeout)
+      log.verbose('Watchdog', '<%s> startTimer() setTimeout() after %d', this.name, timeout)
       this.timer = undefined  // sleep after reset
       this.emit(
         'reset',
@@ -124,10 +124,10 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
   }
 
   private stopTimer(sleep = false): void {
-    log.verbose('Watchdog', '%s: stopTimer()', this.name)
+    log.verbose('Watchdog', '<%s> stopTimer()', this.name)
 
     if (typeof this.timer === 'undefined') {  // first time
-      log.verbose('Watchdog', '%s: stopTimer() first run(or after sleep)', this.name)
+      log.verbose('Watchdog', '<%s> stopTimer() first run(or after sleep)', this.name)
       return
     }
 
@@ -150,10 +150,10 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
       // console.log('timeout=', this.lastFood.timeout)
       // console.log('Date.now()=', Date.now())
       left = this.lastFeed + this.defaultTimeout - Date.now()
-      log.verbose('Watchdog', '%s: timerLeft() = %d', this.name, left)
+      log.verbose('Watchdog', '<%s> timerLeft() = %d', this.name, left)
     } else {
       left = 0
-      log.verbose('Watchdog', '%s: timerLeft() first feed, left=%s', this.name, left)
+      log.verbose('Watchdog', '<%s> timerLeft() first feed, left=%s', this.name, left)
     }
     return left
   }
@@ -199,7 +199,7 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
       }
     }
 
-    log.verbose('Watchdog', '%s: feed(%s)', this.name, JSON.stringify(food, replacerFactory()))
+    log.verbose('Watchdog', '<%s> feed(%s)', this.name, JSON.stringify(food, replacerFactory()))
 
     if (!food.timeout) {
       food.timeout = this.defaultTimeout
@@ -225,7 +225,7 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
    * dog.sleep()
    */
   public sleep(): void {
-    log.verbose('Watchdog', '%s: sleep()', this.name)
+    log.verbose('Watchdog', '<%s> sleep()', this.name)
     this.stopTimer(true)
     this.timer = undefined
     this.emit('sleep', this.lastFood, this.left())
