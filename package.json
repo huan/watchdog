@@ -37,7 +37,7 @@
   "homepage": "https://github.com/zixia/watchdog#readme",
   "devDependencies": {
     "@types/blue-tape": "^0.1.31",
-    "@types/node": "^9.6.6",
+    "@types/node": "^10.0.3",
     "@types/semver": "^5.5.0",
     "@types/sinon": "^4.3.1",
     "blue-tape": "^1.0.0",
