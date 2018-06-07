@@ -4,7 +4,10 @@
     , "declaration": true
     , "emitDecoratorMetadata": true
     , "experimentalDecorators": true
+
+    , "skipDefaultLibCheck": true
     , "skipLibCheck": true
+    , "strict": true
     , "noUnusedLocals": true
     , "noImplicitReturns": true
     , "noFallthroughCasesInSwitch": true
@@ -18,8 +21,7 @@
 
     , "outDir": "dist"
     , "lib": [
-        "dom"
-      , "esnext"
+      "esnext"
     ]
     , "target": "es6"
     , "module": "commonjs"

@@ -21,8 +21,8 @@ export interface WatchdogFood<T = any, D = any> {
 export class Watchdog<T = any, D = any> extends EventEmitter {
   private timer : NodeJS.Timer | undefined | null  // `undefined` stands for the first time init. `null` will be set by `stopTimer`
 
-  private lastFeed : number
-  private lastFood : WatchdogFood<T, D>
+  private lastFeed? : number
+  private lastFood? : WatchdogFood<T, D>
 
   /**
    * A Timer used to detect and recover from malfunctions
@@ -114,7 +114,7 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
       this.emit(
         'reset',
         this.lastFood,
-        this.lastFood.timeout || this.defaultTimeout,
+        this.lastFood && this.lastFood.timeout || this.defaultTimeout,
       )
     }, timeout)
 
@@ -145,7 +145,9 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
    */
   public left(): number {
     let left
-    if (Number.isInteger(this.lastFeed)) {
+    if (   typeof this.lastFeed !== 'undefined'
+        && Number.isInteger(this.lastFeed)
+    ) {
       // console.log('lastFeed=', this.lastFeed)
       // console.log('timeout=', this.lastFood.timeout)
       // console.log('Date.now()=', Date.now())
