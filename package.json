@@ -15,7 +15,7 @@
     "doc": "npm run dist && echo '# Watchdog v'$(jq -r .version package.json)' Documentation\n' > docs/index.md && jsdoc2md dist/watchdog.js >> docs/index.md",
     "demo": "ts-node examples/demo",
     "example": "npm run dmeo",
-    "lint": "echo tslint v`tslint --version` && tslint --project tsconfig.json --exclude \"tests/fixtures/**\" --exclude \"dist/\" && npm run clean && tsc --noEmit",
+    "lint": "tslint --project tsconfig.json && npm run clean && tsc --noEmit",
     "rollup": "rollup -c",
     "test": "npm run lint && npm run test:unit",
     "test:unit": "blue-tape -r ts-node/register \"src/**/*.spec.ts\" \"tests/**/*.spec.ts\"",
