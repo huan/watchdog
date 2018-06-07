@@ -15,10 +15,11 @@ A Timer used to Detect and Recover from Malfunctions.
 
 ```shell
 $ npm install watchdog
+...
 ```
 
 ```ts
-import Watchdog from 'watchdog'
+import { Watchdog } from 'watchdog'
 
 const TIMEOUT = 1 * 1000  // 1 second
 const dog = new watchdog(TIMEOUT)
