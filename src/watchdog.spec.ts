@@ -29,8 +29,6 @@ test('starve to reset', sinonTest(async function(this: any, t: test.Test) {
   watchdog.feed(EXPECTED_FOOD)
 
   this.clock.tick(TIMEOUT + 1)
-
-  t.end()
 }))
 
 test('feed in the middle', sinonTest(async function(this: any, t: test.Test) {
@@ -47,8 +45,6 @@ test('feed in the middle', sinonTest(async function(this: any, t: test.Test) {
   this.clock.tick(FEED_TIME)
   const left = watchdog.feed({ data: 'dummy' })
   t.equal(left, TIMEOUT - FEED_TIME, 'should get the time left dependes on the FEED_TIME')
-
-  t.end()
 }))
 
 test('sleep()', sinonTest(async function(this: any, t: test.Test) {
@@ -68,8 +64,6 @@ test('sleep()', sinonTest(async function(this: any, t: test.Test) {
 
   const left = watchdog.left()
   t.ok(left < 0, 'time should already passed by...')
-
-  t.end()
 }))
 
 test('event:feed', async t => {
@@ -93,8 +87,7 @@ test('event:sleep', async t => {
   t.ok(spy.calledOnce, 'should fire event:sleep')
 })
 
-test('version()', t => {
+test('version()', async t => {
   const dog = new Watchdog()
   t.ok(dog.version(), 'should get version')
-  t.end()
 })
