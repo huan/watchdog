@@ -203,6 +203,17 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
 
     log.verbose('Watchdog', '<%s> feed(%s)', this.name, JSON.stringify(food, replacerFactory()))
 
+    if (typeof food !== 'object') {
+      /**
+       * weak typing compitable:
+       *  if user call watchdog.feed('string'), we need to pre-processs the food to a object.
+       *  or we will meet a exception: we can not set property on string type.
+       */
+      food = {
+        data: food,
+      }
+    }
+
     if (!food.timeout) {
       food.timeout = this.defaultTimeout
     }
