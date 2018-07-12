@@ -1,6 +1,6 @@
 {
   "name": "watchdog",
-  "version": "0.8.14",
+  "version": "0.8.15",
   "description": "An Timer used to Detect and Recover from Malfunctions",
   "main": "bundles/watchdog.umd.js",
   "types": "dist/watchdog.d.ts",
