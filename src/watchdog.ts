@@ -244,6 +244,15 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
     this.emit('sleep', this.lastFood, this.left())
   }
 
+  /**
+   *
+   */
+  public unref(): void {
+    log.verbose('Watchdog', '<%s> unref()', this.name)
+    if (this.timer) {
+      this.timer.unref()
+    }
+  }
 }
 
 export default Watchdog
