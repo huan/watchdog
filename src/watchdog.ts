@@ -6,8 +6,7 @@ import { EventEmitter } from 'events'
 import { Brolog }  from 'brolog'
 export const log = new Brolog()
 
-import { version }  from '../package.json'
-export const VERSION = version
+export const VERSION = require('../package.json').version
 
 export type WatchdogEvent       = 'feed' | 'reset' | 'sleep'
 export type WatchdogListener<T, D> = (food: WatchdogFood<T, D>, time: number) => void
