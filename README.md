@@ -1,14 +1,14 @@
 # WATCHDOG
 
 [![NPM Version](https://badge.fury.io/js/watchdog.svg)](https://badge.fury.io/js/watchdog)
-[![Build Status](https://travis-ci.org/zixia/watchdog.svg?branch=master)](https://travis-ci.org/zixia/watchdog)
+[![Build Status](https://travis-ci.com/huan/watchdog.svg?branch=master)](https://travis-ci.com/huan/watchdog)
 [![Downloads](http://img.shields.io/npm/dm/watchdog.svg?style=flat-square)](https://npmjs.org/package/watchdog)
 [![Powered by TypeScript](https://img.shields.io/badge/Powered%20By-TypeScript-blue.svg)](https://www.typescriptlang.org/)
-[![Greenkeeper badge](https://badges.greenkeeper.io/zixia/watchdog.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/huan/watchdog.svg)](https://greenkeeper.io/)
 
 A Timer used to Detect and Recover from Malfunctions.
 
-![watchdog](https://zixia.github.io/watchdog/images/watchdog.png)
+![watchdog](https://huan.github.io/watchdog/images/watchdog.png)
 > Picture Credit: [Using Watchdog Timer](https://www.logicsupply.com/explore/io-hub/tutorial-using-beaglebone-black-watchdog-timer/)
 
 ## USAGE
@@ -42,7 +42,7 @@ setTimeout(function() {
 
 ## DOCUMENT
 
-See [auto generated docs](https://zixia.github.io/watchdog)
+See [auto generated docs](https://huan.github.io/watchdog)
 
 ## SEE ALSO
 
