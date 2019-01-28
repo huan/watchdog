@@ -44,6 +44,21 @@ setTimeout(function() {
 
 See [auto generated docs](https://huan.github.io/watchdog)
 
+## HISTORY
+
+### master
+
+In developing ...
+
+### Jul 2018, 0.8
+
+- Stable
+
+### Oct 2017, 0.0.1
+
+- Init watchdog
+
+
 ## SEE ALSO
 
 * [Wikipedia: Watchdog timer](https://en.wikipedia.org/wiki/Watchdog_timer)
