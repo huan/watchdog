@@ -50,11 +50,11 @@ See [auto generated docs](https://huan.github.io/watchdog)
 
 In developing ...
 
-### Jul 2018, 0.8
+### v0.8 Jul 2018
 
 - Stable
 
-### Oct 2017, 0.0.1
+### v0.0.1 Oct 2017
 
 - Init watchdog
 
@@ -78,6 +78,6 @@ Huan LI \<zixia@zixia.net\> (http://linkedin.com/in/zixia)
 
 ## COPYRIGHT & LICENSE
 
-* Code & Docs © 2017 Huan LI \<zixia@zixia.net\>
+* Code & Docs © 2017-2019 Huan LI \<zixia@zixia.net\>
 * Code released under the Apache-2.0 License
 * Docs released under Creative Commons
