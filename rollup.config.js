@@ -1,13 +1,15 @@
 import json from 'rollup-plugin-json'
 
 export default {
-  entry: 'dist/watchdog.js',
-  dest: 'bundles/watchdog.es6.umd.js',
-  sourceMap: true,
-  format: 'umd',
-  moduleName: 'window',
-  banner: '/* watchdog version ' + require('./package.json').version + ' */',
-  footer: '/* https://github.com/huan */',
+  input: 'dist/watchdog.js',
+  output: {
+    file: 'bundles/watchdog.es6.umd.js',
+    sourceMap: true,
+    format: 'umd',
+    name: 'window',
+    banner: '/* watchdog version ' + require('./package.json').version + ' */',
+    footer: '/* https://github.com/huan */',
+  },
   plugins: [
     json({
       // All JSON files will be parsed by default,
