@@ -1,13 +1,13 @@
-import watchdog from '../'
+import Watchdog from '../'
 
-async function main() {
+async function main () {
   const TIMEOUT = 1 * 1000  // 1 second
-  const dog = new watchdog(TIMEOUT)
+  const dog = new Watchdog(TIMEOUT)
 
   const food = { data: 'delicious' }
 
-  dog.on('reset', () => console.log('reset-ed'))
-  dog.on('feed',  () => console.log('feed-ed'))
+  dog.on('reset', () => console.info('reset-ed'))
+  dog.on('feed',  () => console.info('feed-ed'))
 
   dog.feed(food)
   // Output: reset-ed
@@ -16,7 +16,8 @@ async function main() {
   // Output: reset-ed
 
   dog.sleep()
-  console.log('dog sleep-ed. Demo over.')
+  console.info('dog sleep-ed. Demo over.')
 }
 
 main()
+  .catch(console.error)

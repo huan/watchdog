@@ -1,9 +1,9 @@
 #!/usr/bin/env ts-node
 
-// tslint:disable:no-shadowed-variable
-import * as test  from 'blue-tape'
-import * as sinon from 'sinon'
-const sinonTest   = require('sinon-test')(sinon)
+/* eslint-disable func-call-spacing */
+
+import test  from 'blue-tape'
+import sinon from 'sinon'
 
 // import { log }  from './watchdog'
 // log.level('silly')
@@ -13,7 +13,9 @@ import {
   WatchdogFood,
 }               from './watchdog'
 
-test('starve to reset', sinonTest(async function(this: any, t: test.Test) {
+const sinonTest   = require('sinon-test')(sinon)
+
+test('starve to reset', sinonTest (async function (this: any, t: test.Test) {
   const TIMEOUT = 1 * 1000
   const EXPECTED_FOOD = {
     data    : 'dummy',
@@ -31,7 +33,7 @@ test('starve to reset', sinonTest(async function(this: any, t: test.Test) {
   this.clock.tick(TIMEOUT + 1)
 }))
 
-test('feed in the middle', sinonTest(async function(this: any, t: test.Test) {
+test('feed in the middle', sinonTest (async function (this: any, t: test.Test) {
   // console.log('this', this)
   const TIMEOUT   = 1 * 1000
   const FEED_TIME = 0.3 * 1000
@@ -47,7 +49,7 @@ test('feed in the middle', sinonTest(async function(this: any, t: test.Test) {
   t.equal(left, TIMEOUT - FEED_TIME, 'should get the time left dependes on the FEED_TIME')
 }))
 
-test('sleep()', sinonTest(async function(this: any, t: test.Test) {
+test('sleep()', sinonTest (async function (this: any, t: test.Test) {
   const TIMEOUT   = 1 * 1000
   const FEED_TIME = 0.3 * 1000
 

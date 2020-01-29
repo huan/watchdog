@@ -3,10 +3,8 @@
 
 import { EventEmitter } from 'events'
 
-import { Brolog }  from 'brolog'
-export const log = new Brolog()
-
-export const VERSION = require('../package.json').version
+import { log }  from 'brolog'
+import { VERSION } from './version'
 
 export type WatchdogEvent       = 'feed' | 'reset' | 'sleep'
 export type WatchdogListener<T, D> = (food: WatchdogFood<T, D>, time: number) => void
@@ -18,6 +16,9 @@ export interface WatchdogFood<T = any, D = any> {
 }
 
 export class Watchdog<T = any, D = any> extends EventEmitter {
+
+  public static VERSION = VERSION
+
   private timer : NodeJS.Timer | undefined | null  // `undefined` stands for the first time init. `null` will be set by `stopTimer`
 
   private lastFeed? : number
@@ -49,7 +50,7 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
    * // Output: dog sleep-ed. Demo over.
    *
    */
-  constructor(
+  constructor (
     public defaultTimeout = 60 * 1000,
     public name = 'Bark',
   ) {
@@ -57,14 +58,14 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
     log.verbose('Watchdog', '<%s>: constructor(name=%s, defaultTimeout=%d)', name, name, defaultTimeout)
   }
 
-  public version(): string {
+  public version (): string {
     return VERSION
   }
 
-  public on(event: 'feed',  listener: WatchdogListener<T, D>) : this
-  public on(event: 'reset', listener: WatchdogListener<T, D>) : this
-  public on(event: 'sleep', listener: WatchdogListener<T, D>) : this
-  public on(event: never,   listener: never)            : never
+  public on (event: 'feed',  listener: WatchdogListener<T, D>) : this
+  public on (event: 'reset', listener: WatchdogListener<T, D>) : this
+  public on (event: 'sleep', listener: WatchdogListener<T, D>) : this
+  public on (event: never,   listener: never)            : never
 
   /**
    * @desc       Watchdog Class Event Type
@@ -94,13 +95,13 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
    * dog.on('sleep',  () => console.log('sleep-ed'))
    *
    */
-  public on(event: WatchdogEvent, listener: WatchdogListener<T, D>): this {
+  public on (event: WatchdogEvent, listener: WatchdogListener<T, D>): this {
     log.verbose('Watchdog', '<%s> on(%s, listener) registered.', this.name, event)
     super.on(event, listener)
     return this
   }
 
-  private startTimer(timeout: number): void {
+  private startTimer (timeout: number): void {
     log.verbose('Watchdog', '<%s> startTimer()', this.name)
 
     if (this.timer) {
@@ -113,16 +114,14 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
       this.emit(
         'reset',
         this.lastFood,
-        this.lastFood && this.lastFood.timeout || this.defaultTimeout,
+        (this.lastFood && this.lastFood.timeout) || this.defaultTimeout,
       )
     }, timeout)
 
     this.timer.unref()  // should not block node quit
-
-    return
   }
 
-  private stopTimer(sleep = false): void {
+  private stopTimer (sleep = false): void {
     log.verbose('Watchdog', '<%s> stopTimer()', this.name)
 
     if (typeof this.timer === 'undefined') {  // first time
@@ -142,9 +141,9 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
    * Get the left time
    * @returns {number}
    */
-  public left(): number {
+  public left (): number {
     let left
-    if (   typeof this.lastFeed !== 'undefined'
+    if (typeof this.lastFeed !== 'undefined'
         && Number.isInteger(this.lastFeed)
     ) {
       // console.log('lastFeed=', this.lastFeed)
@@ -180,23 +179,23 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
    * const dog = new Watchdog()
    * dog.feed(food)
    */
-  public feed(food: WatchdogFood<T, D>): number {
+  public feed (food: WatchdogFood<T, D>): number {
 
     // JSON.stringify, avoid TypeError: Converting circular structure to JSON
     // https://stackoverflow.com/a/11616993/1123955
-    function replacerFactory() {
+    function replacerFactory () {
       // Note: cache should not be re-used by repeated calls to JSON.stringify.
       const cache: any[] = []
-      return function(_: any, value: any) {
+      return function (_: any, value: any) {
         if (typeof value === 'object' && value !== null) {
           if (cache.indexOf(value) !== -1) {
-              // Circular reference found, discard key
-              return
+            // Circular reference found, discard key
+            return
           }
           // Store value in our collection
           cache.push(value)
         }
-        return value;
+        return value
       }
     }
 
@@ -236,7 +235,7 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
    * const dog = new Watchdog()
    * dog.sleep()
    */
-  public sleep(): void {
+  public sleep (): void {
     log.verbose('Watchdog', '<%s> sleep()', this.name)
     this.stopTimer(true)
     this.timer = undefined
@@ -246,12 +245,18 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
   /**
    *
    */
-  public unref(): void {
+  public unref (): void {
     log.verbose('Watchdog', '<%s> unref()', this.name)
     if (this.timer) {
       this.timer.unref()
     }
   }
+
+}
+
+export {
+  VERSION,
+  log,
 }
 
 export default Watchdog

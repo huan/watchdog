@@ -15,7 +15,9 @@
     "doc": "npm run dist && echo '# Watchdog v'$(jq -r .version package.json)' Documentation\n' > docs/index.md && jsdoc2md dist/watchdog.js >> docs/index.md",
     "demo": "ts-node examples/demo",
     "example": "npm run dmeo",
-    "lint": "tslint --project tsconfig.json && npm run clean && tsc --noEmit",
+    "lint": "npm run lint:es && npm run lint:ts",
+    "lint:ts": "tsc --noEmit",
+    "lint:es": "eslint --ignore-pattern tests/fixtures/ '{bin,examples,scripts,src,tests}/**/*.ts'",
     "pack": "npm pack",
     "rollup": "rollup -c",
     "test": "npm run lint && npm run test:unit",
@@ -37,24 +39,18 @@
   },
   "homepage": "https://github.com/huan/watchdog#readme",
   "devDependencies": {
-    "@types/blue-tape": "^0.1.31",
-    "@types/node": "^13.1.1",
-    "@types/semver": "^6.2.0",
-    "@types/sinon": "^7.5.1",
-    "blue-tape": "^1.0.0",
+    "@chatie/eslint-config": "^0.8.1",
+    "@chatie/git-scripts": "^0.2.5",
+    "@chatie/semver": "^0.4.7",
+    "@chatie/tsconfig": "^0.6.1",
     "brolog": "^1.3.3",
-    "git-scripts": "^0.2.1",
     "jsdoc-to-markdown": "^5.0.3",
+    "pkg-jq": "^0.2.4",
     "rollup": "^1.27.14",
     "rollup-plugin-json": "^4.0.0",
-    "semver": "^7.1.1",
     "shx": "^0.3.0",
-    "sinon": "^8.0.1",
-    "sinon-test": "^2.1.1",
     "source-map-support": "^0.5.0",
-    "ts-node": "^8.5.4",
-    "tslint": "^5.7.0",
-    "typescript": "^3.0.3"
+    "tstest": "^0.4.9"
   },
   "peerDependencies": {},
   "dependencies": {
@@ -69,13 +65,13 @@
     "src/",
     "dist/"
   ],
-  "git": {
-    "scripts": {
-      "pre-push": "./scripts/pre-push.sh"
-    }
-  },
   "publishConfig": {
     "access": "public",
-    "tag": "latest"
+    "tag": "next"
+  },
+  "git": {
+    "scripts": {
+      "pre-push": "npx git-scripts-pre-push"
+    }
   }
 }
