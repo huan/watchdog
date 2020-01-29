@@ -8,7 +8,7 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "tsc --module esnext",
+    "build": "tsc --module esnext --moduleResolution node",
     "clean": "shx rm -fr dist/* bundles/*",
     "dist": "npm run clean && npm run build && npm run rollup && npm run dist:es6to5",
     "dist:es6to5": "tsc --out ./bundles/watchdog.umd.js --target es5 --allowJs bundles/watchdog.es6.umd.js --lib es6,dom",
