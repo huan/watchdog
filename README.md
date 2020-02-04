@@ -70,11 +70,9 @@ Thanks to Damon Oehlman (https://github.com/DamonOehlman) who owned the `watchdo
 
 ## AUTHOR
 
-Huan LI \<zixia@zixia.net\> (http://linkedin.com/in/zixia)
+[Huan LI](https://github.com/huan) ([李卓桓](http://linkedin.com/in/zixia)) zixia@zixia.net
 
-<a href="http://stackoverflow.com/users/1123955/zixia">
-  <img src="http://stackoverflow.com/users/flair/1123955.png" width="208" height="58" alt="profile for zixia at Stack Overflow, Q&amp;A for professional and enthusiast programmers" title="profile for zixia at Stack Overflow, Q&amp;A for professional and enthusiast programmers">
-</a>
+[![Profile of Huan LI (李卓桓) on StackOverflow](https://stackexchange.com/users/flair/265499.png)](https://stackexchange.com/users/265499)
 
 ## COPYRIGHT & LICENSE
 
