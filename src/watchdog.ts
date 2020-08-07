@@ -203,8 +203,8 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
 
     if (typeof food !== 'object') {
       /**
-       * weak typing compitable:
-       *  if user call watchdog.feed('string'), we need to pre-processs the food to a object.
+       * weak typing compatible:
+       *  if user call watchdog.feed('string'), we need to pre-process the food to a object.
        *  or we will meet a exception: we can not set property on string type.
        */
       food = {
