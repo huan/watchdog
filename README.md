@@ -52,17 +52,16 @@ In developing ...
 
 ### v0.8 Jul 2018
 
-- Stable
+- Support browser ([#31](https://github.com/huan/watchdog/issues/31))
 
 ### v0.0.1 Oct 2017
 
 - Init watchdog
 
-
 ## SEE ALSO
 
-* [Wikipedia: Watchdog timer](https://en.wikipedia.org/wiki/Watchdog_timer)
-* [Yet Another watchdog timer for node.js (and browserify)](https://github.com/andrew-filonenko/ya-watchdog)
+- [Wikipedia: Watchdog timer](https://en.wikipedia.org/wiki/Watchdog_timer)
+- [Yet Another watchdog timer for node.js (and browserify)](https://github.com/andrew-filonenko/ya-watchdog)
 
 ## THANKS
 
@@ -76,6 +75,6 @@ Thanks to Damon Oehlman (https://github.com/DamonOehlman) who owned the `watchdo
 
 ## COPYRIGHT & LICENSE
 
-* Code & Docs © 2017-2019 Huan LI \<zixia@zixia.net\>
-* Code released under the Apache-2.0 License
-* Docs released under Creative Commons
+- Code & Docs © 2017-2019 Huan LI \<zixia@zixia.net\>
+- Code released under the Apache-2.0 License
+- Docs released under Creative Commons

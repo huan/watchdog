@@ -118,7 +118,10 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
       )
     }, timeout)
 
-    this.timer.unref()  // should not block node quit
+    // https://github.com/huan/watchdog/issues/31
+    if (typeof this.timer['unref'] === 'function') {
+      this.timer.unref()  // should not block node quit
+    }
   }
 
   private stopTimer (sleep = false): void {
@@ -248,7 +251,10 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
   public unref (): void {
     log.verbose('Watchdog', '<%s> unref()', this.name)
     if (this.timer) {
-      this.timer.unref()
+      // https://github.com/huan/watchdog/issues/31
+      if (typeof this.timer['unref'] === 'function') {
+        this.timer.unref()  // should not block node quit
+      }
     }
   }
 
