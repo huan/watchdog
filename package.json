@@ -1,6 +1,6 @@
 {
   "name": "watchdog",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "An Timer used to Detect and Recover from Malfunctions",
   "type": "module",
   "exports": {
