@@ -1,17 +1,19 @@
-import { Watchdog } from 'watchdog'
+import {
+  Watchdog,
+  VERSION,
+}             from 'watchdog'
 
 async function main () {
-  try {
-    const dog = new Watchdog()
-    dog.feed({ data: 'food' })
-    dog.sleep()
-    console.log(`WatchDog v${dog.version()}`)
-    console.log('Smoke Testing PASSED!')
-    return 0
-  } catch (e) {
-    console.error(e)
-    return 1
+  const dog = new Watchdog()
+  dog.feed({ data: 'food' })
+  dog.sleep()
+
+  if (VERSION === '0.0.0') {
+    throw new Error('version should be set before publishing')
   }
+
+  console.log(`WatchDog v${dog.version()} smoke Testing PASSED!`)
+  return 0
 }
 
 main()
