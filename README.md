@@ -1,10 +1,10 @@
 # WATCHDOG
 
+[![NPM](https://github.com/huan/watchdog/actions/workflows/npm.yml/badge.svg)](https://github.com/huan/watchdog/actions/workflows/npm.yml)
 [![NPM Version](https://badge.fury.io/js/watchdog.svg)](https://badge.fury.io/js/watchdog)
-[![Build Status](https://travis-ci.com/huan/watchdog.svg?branch=master)](https://travis-ci.com/huan/watchdog)
 [![Downloads](http://img.shields.io/npm/dm/watchdog.svg?style=flat-square)](https://npmjs.org/package/watchdog)
 [![Powered by TypeScript](https://img.shields.io/badge/Powered%20By-TypeScript-blue.svg)](https://www.typescriptlang.org/)
-[![Greenkeeper badge](https://badges.greenkeeper.io/huan/watchdog.svg)](https://greenkeeper.io/)
+[![ES Modules](https://img.shields.io/badge/ES-Modules-brightgreen)](https://github.com/Chatie/tsconfig/issues/16)
 
 A Timer used to Detect and Recover from Malfunctions.
 
