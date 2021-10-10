@@ -1,4 +1,4 @@
-import Watchdog from '../'
+import { Watchdog } from '../src/mod.js'
 
 async function main () {
   const TIMEOUT = 1 * 1000  // 1 second

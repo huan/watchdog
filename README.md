@@ -65,7 +65,9 @@ In developing ...
 
 ## THANKS
 
-Thanks to Damon Oehlman (https://github.com/DamonOehlman) who owned the `watchdog` name of NPM module. He is so kind and nice that passed this name over to me after my request.
+Thanks to Damon Oehlman (<https://github.com/DamonOehlman>)
+who owned the `watchdog` name of NPM module.
+He is so kind and nice that passed this name over to me after my request.
 
 ## AUTHOR
 
@@ -75,6 +77,6 @@ Thanks to Damon Oehlman (https://github.com/DamonOehlman) who owned the `watchdo
 
 ## COPYRIGHT & LICENSE
 
-- Code & Docs © 2017-2019 Huan LI \<zixia@zixia.net\>
+- Code & Docs © 2017-now Huan LI \<zixia@zixia.net\>
 - Code released under the Apache-2.0 License
 - Docs released under Creative Commons

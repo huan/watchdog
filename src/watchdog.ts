@@ -4,22 +4,23 @@
 import { EventEmitter } from 'events'
 
 import { log }  from 'brolog'
-import { VERSION } from './version'
 
-export type WatchdogEvent       = 'feed' | 'reset' | 'sleep'
-export type WatchdogListener<T, D> = (food: WatchdogFood<T, D>, time: number) => void
+import { VERSION } from './version.js'
 
-export interface WatchdogFood<T = any, D = any> {
-  data     : D,
-  timeout? : number,   // millisecond
-  type?    : T
+interface WatchdogFood<T = any, D = any> {
+  data                 : D,
+  timeoutMilliseconds? : number,
+  type?                : T
 }
 
-export class Watchdog<T = any, D = any> extends EventEmitter {
+type WatchdogEvent       = 'feed' | 'reset' | 'sleep'
+type WatchdogListener<T, D> = (food: WatchdogFood<T, D>, time: number) => void
 
-  public static VERSION = VERSION
+class Watchdog<T = any, D = any> extends EventEmitter {
 
-  private timer : NodeJS.Timer | undefined | null  // `undefined` stands for the first time init. `null` will be set by `stopTimer`
+  static VERSION = VERSION
+
+  private timer : ReturnType<typeof setTimeout> | undefined | null  // `undefined` stands for the first time init. `null` will be set by `stopTimer`
 
   private lastFeed? : number
   private lastFood? : WatchdogFood<T, D>
@@ -28,7 +29,7 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
    * A Timer used to detect and recover from malfunctions
    *
    * @class Watchdog
-   * @param {number} [defaultTimeout=60 * 1000]
+   * @param {number} [defaultTimeoutMilliseconds=60 * 1000]
    * @param {string} [name='Bark']
    * @example
    * const TIMEOUT = 1 * 1000  // 1 second
@@ -51,21 +52,21 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
    *
    */
   constructor (
-    public defaultTimeout = 60 * 1000,
+    public defaultTimeoutMilliseconds = 60 * 1000,
     public name = 'Bark',
   ) {
     super()
-    log.verbose('Watchdog', '<%s>: constructor(name=%s, defaultTimeout=%d)', name, name, defaultTimeout)
+    log.verbose('Watchdog', '<%s>: constructor(name=%s, defaultTimeout=%d)', name, name, defaultTimeoutMilliseconds)
   }
 
-  public version (): string {
+  version (): string {
     return VERSION
   }
 
-  public on (event: 'feed',  listener: WatchdogListener<T, D>) : this
-  public on (event: 'reset', listener: WatchdogListener<T, D>) : this
-  public on (event: 'sleep', listener: WatchdogListener<T, D>) : this
-  public on (event: never,   listener: never)            : never
+  override on (event: 'feed',  listener: WatchdogListener<T, D>) : this
+  override on (event: 'reset', listener: WatchdogListener<T, D>) : this
+  override on (event: 'sleep', listener: WatchdogListener<T, D>) : this
+  override on (event: never,   listener: never)            : never
 
   /**
    * @desc       Watchdog Class Event Type
@@ -95,7 +96,7 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
    * dog.on('sleep',  () => console.log('sleep-ed'))
    *
    */
-  public on (event: WatchdogEvent, listener: WatchdogListener<T, D>): this {
+  override on (event: WatchdogEvent, listener: WatchdogListener<T, D>): this {
     log.verbose('Watchdog', '<%s> on(%s, listener) registered.', this.name, event)
     super.on(event, listener)
     return this
@@ -114,7 +115,7 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
       this.emit(
         'reset',
         this.lastFood,
-        (this.lastFood && this.lastFood.timeout) || this.defaultTimeout,
+        (this.lastFood && this.lastFood.timeoutMilliseconds) || this.defaultTimeoutMilliseconds,
       )
     }, timeout)
 
@@ -144,7 +145,7 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
    * Get the left time
    * @returns {number}
    */
-  public left (): number {
+  left (): number {
     let left
     if (typeof this.lastFeed !== 'undefined'
         && Number.isInteger(this.lastFeed)
@@ -152,7 +153,7 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
       // console.log('lastFeed=', this.lastFeed)
       // console.log('timeout=', this.lastFood.timeout)
       // console.log('Date.now()=', Date.now())
-      left = this.lastFeed + this.defaultTimeout - Date.now()
+      left = this.lastFeed + this.defaultTimeoutMilliseconds - Date.now()
       log.verbose('Watchdog', '<%s> timerLeft() = %d', this.name, left)
     } else {
       left = 0
@@ -182,7 +183,7 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
    * const dog = new Watchdog()
    * dog.feed(food)
    */
-  public feed (food: WatchdogFood<T, D>): number {
+  feed (food: WatchdogFood<T, D>): number {
 
     // JSON.stringify, avoid TypeError: Converting circular structure to JSON
     // https://stackoverflow.com/a/11616993/1123955
@@ -215,14 +216,14 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
       }
     }
 
-    if (!food.timeout) {
-      food.timeout = this.defaultTimeout
+    if (!food.timeoutMilliseconds) {
+      food.timeoutMilliseconds = this.defaultTimeoutMilliseconds
     }
 
     const left = this.left()
 
     this.stopTimer()
-    this.startTimer(food.timeout)
+    this.startTimer(food.timeoutMilliseconds)
 
     this.lastFeed = Date.now()
     this.lastFood = food
@@ -238,7 +239,7 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
    * const dog = new Watchdog()
    * dog.sleep()
    */
-  public sleep (): void {
+  sleep (): void {
     log.verbose('Watchdog', '<%s> sleep()', this.name)
     this.stopTimer(true)
     this.timer = undefined
@@ -248,7 +249,7 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
   /**
    *
    */
-  public unref (): void {
+  unref (): void {
     log.verbose('Watchdog', '<%s> unref()', this.name)
     if (this.timer) {
       // https://github.com/huan/watchdog/issues/31
@@ -260,9 +261,9 @@ export class Watchdog<T = any, D = any> extends EventEmitter {
 
 }
 
-export {
-  VERSION,
-  log,
+export type {
+  WatchdogFood,
 }
-
-export default Watchdog
+export {
+  Watchdog,
+}

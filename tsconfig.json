@@ -1,7 +1,7 @@
 {
   "extends": "@chatie/tsconfig",
   "compilerOptions": {
-    "outDir": "dist",
+    "outDir": "dist/esm",
   },
   "exclude": [
     "node_modules/",
@@ -9,6 +9,8 @@
     "tests/fixtures/",
   ],
   "include": [
+    "examples/**/*.ts",
+    "tests/**/*.ts",
     "src/**/*.ts",
   ],
   "include_comment": "Huan(202001): we have to keep it only has one entry: src/**/*.ts so that the test:pack script will be able to run. Need to study more."

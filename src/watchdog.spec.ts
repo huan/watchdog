@@ -1,39 +1,46 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env -S node --no-warnings --loader ts-node/esm
 
-/* eslint-disable func-call-spacing */
-
-import test  from 'blue-tape'
-import sinon from 'sinon'
-
-// import { log }  from './watchdog'
-// log.level('silly')
+import {
+  test,
+  sinon,
+}           from 'tstest'
 
 import {
   Watchdog,
   WatchdogFood,
-}               from './watchdog'
+}               from './watchdog.js'
 
-const sinonTest   = require('sinon-test')(sinon)
+// const sinonTest   = require('sinon-test')(sinon)
 
-test('starve to reset', sinonTest (async function (this: any, t: test.Test) {
+test('starve to reset', async t => {
+  const sandbox = sinon.createSandbox({
+    useFakeTimers : true,
+  })
+
   const TIMEOUT = 1 * 1000
   const EXPECTED_FOOD = {
     data    : 'dummy',
-    timeout : TIMEOUT,
+    timeoutMilliseconds : TIMEOUT,
   } as WatchdogFood
 
   const watchdog = new Watchdog(TIMEOUT, 'TestWatchdog')
 
   watchdog.on('reset', (food, timeout) => {
     t.equal(timeout, TIMEOUT, 'timeout should equal to TIMEOUT when reset')
-    t.deepEqual(food, EXPECTED_FOOD, 'should get food back when reset')
+    t.same(food, EXPECTED_FOOD, 'should get food back when reset')
   })
   watchdog.feed(EXPECTED_FOOD)
 
-  this.clock.tick(TIMEOUT + 1)
-}))
+  sandbox.clock.tick(TIMEOUT + 1)
 
-test('feed in the middle', sinonTest (async function (this: any, t: test.Test) {
+  sandbox.restore()
+})
+
+test('feed in the middle', async t => {
+  const sandbox = sinon.createSandbox({
+    useFakeTimers : true,
+  })
+
   // console.log('this', this)
   const TIMEOUT   = 1 * 1000
   const FEED_TIME = 0.3 * 1000
@@ -44,12 +51,18 @@ test('feed in the middle', sinonTest (async function (this: any, t: test.Test) {
   })
   watchdog.feed({ data: 'dummy' })
 
-  this.clock.tick(FEED_TIME)
+  sandbox.clock.tick(FEED_TIME)
   const left = watchdog.feed({ data: 'dummy' })
   t.equal(left, TIMEOUT - FEED_TIME, 'should get the time left dependes on the FEED_TIME')
-}))
 
-test('sleep()', sinonTest (async function (this: any, t: test.Test) {
+  sandbox.restore()
+})
+
+test('sleep()', async t => {
+  const sandbox = sinon.createSandbox({
+    useFakeTimers : true,
+  })
+
   const TIMEOUT   = 1 * 1000
   const FEED_TIME = 0.3 * 1000
 
@@ -59,14 +72,16 @@ test('sleep()', sinonTest (async function (this: any, t: test.Test) {
   })
   watchdog.feed({ data: 'dummy' })
 
-  this.clock.tick(FEED_TIME)
+  sandbox.clock.tick(FEED_TIME)
   watchdog.sleep()
 
-  this.clock.tick(TIMEOUT * 2)
+  sandbox.clock.tick(TIMEOUT * 2)
 
   const left = watchdog.left()
   t.ok(left < 0, 'time should already passed by...')
-}))
+
+  sandbox.restore()
+})
 
 test('event:feed', async t => {
   const watchdog = new Watchdog()
