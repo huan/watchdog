@@ -1,67 +1,52 @@
 #!/usr/bin/env bash
 set -e
 
-VERSION=$(npx pkg-jq -r .version)
+REPO_DIR=$(pwd)
+TMPDIR=
+cleanup () {
+  git checkout src/version.ts 2>/dev/null || true
+  if [ -n "$TMPDIR" ] && [ -d "$TMPDIR" ]; then
+    rm -rf "$TMPDIR"
+  fi
+}
+trap cleanup EXIT
 
-if npx --package @chatie/semver semver-is-prod "$VERSION"; then
-  NPM_TAG=latest
-else
-  NPM_TAG=next
-fi
-
+./scripts/generate-version.sh
 npm run dist
-npm pack
+
+TARBALL=$(npm pack | tail -n 1)
+git checkout src/version.ts
 
 TMPDIR="/tmp/npm-pack-testing.$$"
-mkdir "$TMPDIR"
-trap "rm -fr '$TMPDIR'" EXIT
-
-mv ./*-*.*.*.tgz "$TMPDIR"
+mkdir -p "$TMPDIR"
+mv "$TARBALL" "$TMPDIR"
 cp tests/fixtures/smoke-testing.ts "$TMPDIR"
 
-cd $TMPDIR
+cd "$TMPDIR"
 
 npm init -y
-npm install --production ./*-*.*.*.tgz \
-  @chatie/tsconfig@$NPM_TAG \
-  pkg-jq \
+npm pkg set type=module
+npm install ./"$TARBALL" @types/node typescript
 
-#
-# CommonJS
-#
-npx tsc \
-  --target es6 \
-  --module CommonJS \
-  \
-  --moduleResolution node \
-  --esModuleInterop \
+./node_modules/.bin/tsc \
   --lib esnext \
+  --types node \
   --noEmitOnError \
   --noImplicitAny \
   --skipLibCheck \
-  smoke-testing.ts
-
-echo
-echo "CommonJS: pack testing..."
-node smoke-testing.js
-
-#
-# ES Modules
-#
-npx pkg-jq -i '.type="module"'
-
-npx tsc \
-  --target es2020 \
-  --module es2020 \
-  \
-  --moduleResolution node \
-  --esModuleInterop \
-  --lib esnext \
-  --noEmitOnError \
-  --noImplicitAny \
-  --skipLibCheck \
+  --target esnext \
+  --module NodeNext \
+  --moduleResolution NodeNext \
   smoke-testing.ts
 
 echo
 echo "ES Module: pack testing..."
 node smoke-testing.js
+
+echo
+echo "Deno: pack testing..."
+if command -v deno >/dev/null 2>&1; then
+  deno run --node-modules-dir=manual -A smoke-testing.js
+else
+  echo "deno not found, skipping"
+fi
