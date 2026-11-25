@@ -58,6 +58,5 @@ typings/
 .env
 
 t.*
-package-lock.json
 /dist/
 /bundles/

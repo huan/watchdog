@@ -1,10 +1,10 @@
 import {
   Watchdog,
-  WatchdogFood,
-}               from './watchdog.js'
+  type WatchdogFood,
+} from './watchdog.ts'
 import {
   VERSION,
-}               from './version.js'
+} from './version.ts'
 
 export type {
   WatchdogFood,

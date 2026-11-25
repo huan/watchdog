@@ -1,24 +1,24 @@
 import {
   Watchdog,
   VERSION,
-}             from 'watchdog'
+} from 'watchdog'
 
 async function main () {
   const dog = new Watchdog()
   dog.feed({ data: 'food' })
   dog.sleep()
 
-  if (VERSION === '0.0.0') {
+  if (dog.version() === '0.0.0') {
     throw new Error('version should be set before publishing')
   }
 
-  console.log(`WatchDog v${dog.version()} smoke Testing PASSED!`)
+  console.log(`Watchdog v${dog.version()} smoke testing PASSED!`)
   return 0
 }
 
 main()
-.then(process.exit)
-.catch(e => {
-  console.error(e)
-  process.exit(1)
-})
+  .then(code => process.exit(code || 0))
+  .catch(e => {
+    console.error(e)
+    process.exit(1)
+  })
